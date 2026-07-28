@@ -83,6 +83,9 @@
         .photo-card:nth-child(6) { animation-delay: 0.3s; }
         .photo-card:nth-child(7) { animation-delay: 0.35s; }
         .photo-card:nth-child(8) { animation-delay: 0.4s; }
+        .photo-card:nth-child(9) { animation-delay: 0.45s; }
+        .photo-card:nth-child(10) { animation-delay: 0.5s; }
+        .photo-card:nth-child(11) { animation-delay: 0.55s; }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -115,26 +118,6 @@
             font-size: 15px;
             font-weight: 500;
         }
-        .photo-date {
-            font-size: 12px;
-            color: rgba(255,255,255,0.6);
-            margin-top: 4px;
-        }
-        .placeholder-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: 2px dashed rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.02);
-        }
-        .placeholder-card .icon { font-size: 40px; }
-        .placeholder-card p {
-            color: rgba(255,255,255,0.5);
-            font-size: 14px;
-        }
-        /* Lightbox */
         .lightbox {
             position: fixed;
             inset: 0;
@@ -175,32 +158,6 @@
             color: rgba(255,255,255,0.4);
             font-size: 14px;
         }
-        .instructions {
-            max-width: 700px;
-            margin: 0 auto 40px;
-            padding: 20px 25px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 14px;
-            text-align: center;
-        }
-        .instructions h4 {
-            color: #ff69b4;
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-        .instructions p {
-            color: rgba(255,255,255,0.6);
-            font-size: 14px;
-            line-height: 1.7;
-        }
-        .instructions code {
-            background: rgba(255,255,255,0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 13px;
-        }
         @media (max-width: 768px) {
             .page-header h1 { font-size: 30px; }
             .gallery { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; padding: 15px; }
@@ -225,81 +182,82 @@
         <p>كل صورة فيها قصة حب</p>
     </div>
 
-    <div class="instructions">
-        <h4>📌 طريقة إضافة الصور</h4>
-        <p>حط صورك في مجلد <code>images/</code> وعدل المسار في ملف <code>photos.html</code><br>مثال: <code>images/photo1.jpg</code></p>
-    </div>
-
     <div class="gallery" id="gallery">
-        <!-- PLACEHOLDER PHOTOS - Replace src with your actual images -->
-        <div class="photo-card" onclick="openLightbox('images/photo1.jpg', 'أول صورة مع بعض ❤️')">
-            <img src="https://via.placeholder.com/400x300/2d1b4e/ff69b4?text=صورة+1" alt="صورة 1">
+        <div class="photo-card" onclick="openLightbox('images/photo1.jpg')">
+            <img src="images/photo1.jpg" alt="صورة 1">
             <div class="photo-overlay">
-                <div>
-                    <div class="photo-caption">أول صورة مع بعض ❤️</div>
-                    <div class="photo-date">9 نوفمبر 2025</div>
-                </div>
+                <div class="photo-caption">❤️ قلبنا مع بعض</div>
             </div>
         </div>
 
-        <div class="photo-card" onclick="openLightbox('images/photo2.jpg', 'يوم جميل معاكي')">
-            <img src="https://via.placeholder.com/400x300/4a1a4a/ff69b4?text=صورة+2" alt="صورة 2">
+        <div class="photo-card" onclick="openLightbox('images/photo2.jpg')">
+            <img src="images/photo2.jpg" alt="صورة 2">
             <div class="photo-overlay">
-                <div>
-                    <div class="photo-caption">يوم جميل معاكي</div>
-                    <div class="photo-date">تاريخك هنا</div>
-                </div>
+                <div class="photo-caption">❤️ قلوبنا على ايدينا</div>
             </div>
         </div>
 
-        <div class="photo-card" onclick="openLightbox('images/photo3.jpg', 'ضحكتك اللي بحبها')">
-            <img src="https://via.placeholder.com/400x300/1a0a2e/ff69b4?text=صورة+3" alt="صورة 3">
+        <div class="photo-card" onclick="openLightbox('images/photo3.jpg')">
+            <img src="images/photo3.jpg" alt="صورة 3">
             <div class="photo-overlay">
-                <div>
-                    <div class="photo-caption">ضحكتك اللي بحبها</div>
-                    <div class="photo-date">تاريخك هنا</div>
-                </div>
+                <div class="photo-caption">❤️ معاكي كل حاجة حلوة</div>
             </div>
         </div>
 
-        <div class="photo-card" onclick="openLightbox('images/photo4.jpg', 'لحظة ما تتنساش')">
-            <img src="https://via.placeholder.com/400x300/2d1b4e/ff69b4?text=صورة+4" alt="صورة 4">
+        <div class="photo-card" onclick="openLightbox('images/photo4.jpg')">
+            <img src="images/photo4.jpg" alt="صورة 4">
             <div class="photo-overlay">
-                <div>
-                    <div class="photo-caption">لحظة ما تتنساش</div>
-                    <div class="photo-date">تاريخك هنا</div>
-                </div>
+                <div class="photo-caption">❤️ قلبنا كبير</div>
             </div>
         </div>
 
-        <div class="photo-card" onclick="openLightbox('images/photo5.jpg', 'أجمل يوم في حياتي')">
-            <img src="https://via.placeholder.com/400x300/4a1a4a/ff69b4?text=صورة+5" alt="صورة 5">
+        <div class="photo-card" onclick="openLightbox('images/photo5.jpg')">
+            <img src="images/photo5.jpg" alt="صورة 5">
             <div class="photo-overlay">
-                <div>
-                    <div class="photo-caption">أجمل يوم في حياتي</div>
-                    <div class="photo-date">تاريخك هنا</div>
-                </div>
+                <div class="photo-caption">❤️ إيدينا مع بعض</div>
             </div>
         </div>
 
-        <div class="photo-card" onclick="openLightbox('images/photo6.jpg', 'معاكي كل حاجة حلوة')">
-            <img src="https://via.placeholder.com/400x300/1a0a2e/ff69b4?text=صورة+6" alt="صورة 6">
+        <div class="photo-card" onclick="openLightbox('images/photo6.jpg')">
+            <img src="images/photo6.jpg" alt="صورة 6">
             <div class="photo-overlay">
-                <div>
-                    <div class="photo-caption">معاكي كل حاجة حلوة</div>
-                    <div class="photo-date">تاريخك هنا</div>
-                </div>
+                <div class="photo-caption">❤️ متشابكين لأبد الدهر</div>
             </div>
         </div>
 
-        <div class="placeholder-card">
-            <span class="icon">📷</span>
-            <p>ضيفي صورة جديدة</p>
+        <div class="photo-card" onclick="openLightbox('images/photo7.jpg')">
+            <img src="images/photo7.jpg" alt="صورة 7">
+            <div class="photo-overlay">
+                <div class="photo-caption">💌 كلام من القلب</div>
+            </div>
         </div>
 
-        <div class="placeholder-card">
-            <span class="icon">📷</span>
-            <p>ضيفي صورة جديدة</p>
+        <div class="photo-card" onclick="openLightbox('images/photo8.jpg')">
+            <img src="images/photo8.jpg" alt="صورة 8">
+            <div class="photo-overlay">
+                <div class="photo-caption">💬 لحظاتنا الحلوة</div>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openLightbox('images/photo9.jpg')">
+            <img src="images/photo9.jpg" alt="صورة 9">
+            <div class="photo-overlay">
+                <div class="photo-caption">💬 مسافاتنا ما بتفرقش</div>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openLightbox('images/photo10.jpg')">
+            <img src="images/photo10.jpg" alt="صورة 10">
+            <div class="photo-overlay">
+                <div class="photo-caption">💬 كل كلمة منك كنز</div>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openLightbox('images/photo11.jpg')">
+            <img src="images/photo11.jpg" alt="صورة 11">
+            <div class="photo-overlay">
+                <div class="photo-caption">💌 حبيبي ونور عيوني</div>
+            </div>
         </div>
     </div>
 
@@ -313,7 +271,7 @@
     </footer>
 
     <script>
-        function openLightbox(src, caption) {
+        function openLightbox(src) {
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightbox').classList.add('show');
             document.body.style.overflow = 'hidden';

@@ -1,286 +1,38 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❤️ صورنا</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #4a1a4a 100%);
-            min-height: 100vh;
-            color: #fff;
-            overflow-x: hidden;
-        }
-        .navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            z-index: 100;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo { font-size: 22px; font-weight: 800; }
-        .nav-links { display: flex; gap: 8px; }
-        .nav-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            color: #fff;
-            background: rgba(255,105,180,0.2);
-        }
-        .page-header {
-            text-align: center;
-            padding: 120px 20px 40px;
-        }
-        .page-header h1 {
-            font-size: 42px;
-            font-weight: 900;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 20px rgba(255,105,180,0.3);
-        }
-        .page-header p {
-            color: rgba(255,255,255,0.6);
-            font-size: 18px;
-        }
-        .gallery {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 30px 60px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .photo-card {
-            position: relative;
-            border-radius: 18px;
-            overflow: hidden;
-            aspect-ratio: 4/3;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
-        }
-        .photo-card:nth-child(1) { animation-delay: 0.05s; }
-        .photo-card:nth-child(2) { animation-delay: 0.1s; }
-        .photo-card:nth-child(3) { animation-delay: 0.15s; }
-        .photo-card:nth-child(4) { animation-delay: 0.2s; }
-        .photo-card:nth-child(5) { animation-delay: 0.25s; }
-        .photo-card:nth-child(6) { animation-delay: 0.3s; }
-        .photo-card:nth-child(7) { animation-delay: 0.35s; }
-        .photo-card:nth-child(8) { animation-delay: 0.4s; }
-        .photo-card:nth-child(9) { animation-delay: 0.45s; }
-        .photo-card:nth-child(10) { animation-delay: 0.5s; }
-        .photo-card:nth-child(11) { animation-delay: 0.55s; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .photo-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-            border-color: rgba(255,105,180,0.4);
-        }
-        .photo-card img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        .photo-card:hover img {
-            transform: scale(1.1);
-        }
-        .photo-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .photo-card:hover .photo-overlay { opacity: 1; }
-        .photo-caption {
-            font-size: 15px;
-            font-weight: 500;
-        }
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .lightbox.show { display: flex; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .lightbox img {
-            max-width: 90vw;
-            max-height: 85vh;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 20px; left: 20px;
-            font-size: 30px;
-            color: #fff;
-            cursor: pointer;
-            background: rgba(255,255,255,0.1);
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            transition: all 0.3s;
-        }
-        .lightbox-close:hover { background: rgba(255,255,255,0.2); }
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: rgba(255,255,255,0.4);
-            font-size: 14px;
-        }
-        @media (max-width: 768px) {
-            .page-header h1 { font-size: 30px; }
-            .gallery { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; padding: 15px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ صورنا</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Tajawal',sans-serif;background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#4a1a4a 100%);min-height:100vh;color:#fff;overflow-x:hidden}
+.navbar{position:fixed;top:0;left:0;right:0;background:rgba(0,0,0,0.3);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);z-index:100;padding:15px 30px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:800}
+.nav-links{display:flex;gap:8px}
+.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;padding:8px 16px;border-radius:10px;font-size:14px;font-weight:500;transition:all 0.3s}
+.nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(255,105,180,0.2)}
+.page-header{text-align:center;padding:120px 20px 40px}
+.page-header h1{font-size:42px;font-weight:900;margin-bottom:10px;text-shadow:0 4px 20px rgba(255,105,180,0.3)}
+.page-header p{color:rgba(255,255,255,0.6);font-size:18px}
+.empty-state{max-width:500px;margin:60px auto;text-align:center;padding:50px 30px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:20px;animation:fadeInUp 0.8s ease-out}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.empty-state .icon{font-size:80px;margin-bottom:20px;display:block}
+.empty-state h2{font-size:24px;font-weight:700;margin-bottom:10px}
+.empty-state p{color:rgba(255,255,255,0.6);font-size:16px;line-height:1.8}
+.footer{text-align:center;padding:40px 20px;color:rgba(255,255,255,0.4);font-size:14px}
+@media(max-width:768px){.page-header h1{font-size:30px}}
+</style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">❤️ عالمنا</div>
-        <div class="nav-links">
-            <a href="home.html">الرئيسية</a>
-            <a href="memories.html">الذكريات</a>
-            <a href="photos.html" class="active">الصور</a>
-            <a href="videos.html">الفيديوهات</a>
-            <a href="music.html">الأغاني</a>
-            <a href="game.html">اللعبة</a>
-        </div>
-    </nav>
-
-    <div class="page-header">
-        <h1>📸 صورنا</h1>
-        <p>كل صورة فيها قصة حب</p>
-    </div>
-
-    <div class="gallery" id="gallery">
-        <div class="photo-card" onclick="openLightbox('photo1.jpg')">
-            <img src="images/photo1.jpg" alt="صورة 1">
-            <div class="photo-overlay">
-                <div class="photo-caption">❤️ قلبنا مع بعض</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo2.jpg')">
-            <img src="images/photo2.jpg" alt="صورة 2">
-            <div class="photo-overlay">
-                <div class="photo-caption">❤️ قلوبنا على ايدينا</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo3.jpg')">
-            <img src="images/photo3.jpg" alt="صورة 3">
-            <div class="photo-overlay">
-                <div class="photo-caption">❤️ معاكي كل حاجة حلوة</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo4.jpg')">
-            <img src="images/photo4.jpg" alt="صورة 4">
-            <div class="photo-overlay">
-                <div class="photo-caption">❤️ قلبنا كبير</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo5.jpg')">
-            <img src="images/photo5.jpg" alt="صورة 5">
-            <div class="photo-overlay">
-                <div class="photo-caption">❤️ إيدينا مع بعض</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo6.jpg')">
-            <img src="images/photo6.jpg" alt="صورة 6">
-            <div class="photo-overlay">
-                <div class="photo-caption">❤️ متشابكين لأبد الدهر</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo7.jpg')">
-            <img src="images/photo7.jpg" alt="صورة 7">
-            <div class="photo-overlay">
-                <div class="photo-caption">💌 كلام من القلب</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo8.jpg')">
-            <img src="images/photo8.jpg" alt="صورة 8">
-            <div class="photo-overlay">
-                <div class="photo-caption">💬 لحظاتنا الحلوة</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo9.jpg')">
-            <img src="images/photo9.jpg" alt="صورة 9">
-            <div class="photo-overlay">
-                <div class="photo-caption">💬 مسافاتنا ما بتفرقش</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo10.jpg')">
-            <img src="images/photo10.jpg" alt="صورة 10">
-            <div class="photo-overlay">
-                <div class="photo-caption">💬 كل كلمة منك كنز</div>
-            </div>
-        </div>
-
-        <div class="photo-card" onclick="openLightbox('photo11.jpg')">
-            <img src="images/photo11.jpg" alt="صورة 11">
-            <div class="photo-overlay">
-                <div class="photo-caption">💌 حبيبي ونور عيوني</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-close">✕</button>
-        <img id="lightboxImg" src="" alt="">
-    </div>
-
-    <footer class="footer">
-        <p>❤️ كل صورة معاكي لوحة فنية</p>
-    </footer>
-
-    <script>
-        function openLightbox(src) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightbox').classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('show');
-            document.body.style.overflow = '';
-        }
-        document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
-    </script>
+<nav class="navbar"><div class="logo">❤️ عالمنا</div><div class="nav-links"><a href="home.html">الرئيسية</a><a href="memories.html">الذكريات</a><a href="photos.html" class="active">الصور</a><a href="videos.html">الفيديوهات</a><a href="music.html">الأغاني</a><a href="game.html">اللعبة</a></div></nav>
+<div class="page-header"><h1>📸 صورنا</h1><p>معرض الصور الخاص بينا</p></div>
+<div class="empty-state">
+<span class="icon">📷</span>
+<h2>معرض الصور</h2>
+<p>هنا هنحط صورنا الجديدة مع بعض<br>كل صورة فيها قصة حب ❤️</p>
+</div>
+<footer class="footer"><p>❤️ كل صورة معاكي لوحة فنية</p></footer>
 </body>
 </html>

@@ -1,315 +1,63 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❤️ ذكرياتنا</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #4a1a4a 100%);
-            min-height: 100vh;
-            color: #fff;
-            overflow-x: hidden;
-        }
-        .navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            z-index: 100;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo { font-size: 22px; font-weight: 800; }
-        .nav-links { display: flex; gap: 8px; }
-        .nav-links a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            color: #fff;
-            background: rgba(255,105,180,0.2);
-        }
-        .page-header {
-            text-align: center;
-            padding: 120px 20px 40px;
-        }
-        .page-header h1 {
-            font-size: 42px;
-            font-weight: 900;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 20px rgba(255,105,180,0.3);
-        }
-        .page-header p {
-            color: rgba(255,255,255,0.6);
-            font-size: 18px;
-        }
-        .memories-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 30px 60px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .memory-card {
-            position: relative;
-            border-radius: 18px;
-            overflow: hidden;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
-        }
-        .memory-card:nth-child(1) { animation-delay: 0.05s; }
-        .memory-card:nth-child(2) { animation-delay: 0.1s; }
-        .memory-card:nth-child(3) { animation-delay: 0.15s; }
-        .memory-card:nth-child(4) { animation-delay: 0.2s; }
-        .memory-card:nth-child(5) { animation-delay: 0.25s; }
-        .memory-card:nth-child(6) { animation-delay: 0.3s; }
-        .memory-card:nth-child(7) { animation-delay: 0.35s; }
-        .memory-card:nth-child(8) { animation-delay: 0.4s; }
-        .memory-card:nth-child(9) { animation-delay: 0.45s; }
-        .memory-card:nth-child(10) { animation-delay: 0.5s; }
-        .memory-card:nth-child(11) { animation-delay: 0.55s; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .memory-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255,105,180,0.4);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-        }
-        .memory-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s;
-        }
-        .memory-card:hover img {
-            transform: scale(1.08);
-        }
-        .memory-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 50%);
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .memory-card:hover .memory-overlay {
-            opacity: 1;
-        }
-        .memory-caption {
-            font-size: 15px;
-            font-weight: 500;
-        }
-        .memory-number {
-            position: absolute;
-            top: 12px; right: 12px;
-            width: 32px; height: 32px;
-            background: rgba(255,105,180,0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 700;
-            color: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        /* Lightbox */
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .lightbox.show { display: flex; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .lightbox img {
-            max-width: 90vw;
-            max-height: 85vh;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 20px; left: 20px;
-            font-size: 30px;
-            color: #fff;
-            cursor: pointer;
-            background: rgba(255,255,255,0.1);
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            transition: all 0.3s;
-        }
-        .lightbox-close:hover { background: rgba(255,255,255,0.2); }
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: rgba(255,255,255,0.4);
-            font-size: 14px;
-        }
-        @media (max-width: 768px) {
-            .page-header h1 { font-size: 30px; }
-            .memories-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding: 15px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ ذكرياتنا</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Tajawal',sans-serif;background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#4a1a4a 100%);min-height:100vh;color:#fff;overflow-x:hidden}
+.navbar{position:fixed;top:0;left:0;right:0;background:rgba(0,0,0,0.3);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);z-index:100;padding:15px 30px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:800}
+.nav-links{display:flex;gap:8px}
+.nav-links a{color:rgba(255,255,255,0.7);text-decoration:none;padding:8px 16px;border-radius:10px;font-size:14px;font-weight:500;transition:all 0.3s}
+.nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(255,105,180,0.2)}
+.page-header{text-align:center;padding:120px 20px 40px}
+.page-header h1{font-size:42px;font-weight:900;margin-bottom:10px;text-shadow:0 4px 20px rgba(255,105,180,0.3)}
+.page-header p{color:rgba(255,255,255,0.6);font-size:18px}
+.memories-grid{max-width:1200px;margin:0 auto;padding:20px 30px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:25px}
+.memory-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:18px;overflow:hidden;transition:all 0.4s;animation:fadeInUp 0.6s ease-out forwards;opacity:0}
+.memory-card:nth-child(1){animation-delay:0.05s}
+.memory-card:nth-child(2){animation-delay:0.1s}
+.memory-card:nth-child(3){animation-delay:0.15s}
+.memory-card:nth-child(4){animation-delay:0.2s}
+.memory-card:nth-child(5){animation-delay:0.25s}
+.memory-card:nth-child(6){animation-delay:0.3s}
+.memory-card:nth-child(7){animation-delay:0.35s}
+.memory-card:nth-child(8){animation-delay:0.4s}
+.memory-card:nth-child(9){animation-delay:0.45s}
+.memory-card:nth-child(10){animation-delay:0.5s}
+.memory-card:nth-child(11){animation-delay:0.55s}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.memory-card:hover{transform:translateY(-8px);border-color:rgba(255,105,180,0.4);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.memory-card img{width:100%;height:280px;object-fit:cover;display:block;transition:transform 0.5s}
+.memory-card:hover img{transform:scale(1.05)}
+.memory-caption{padding:18px 20px;text-align:center;background:rgba(0,0,0,0.2)}
+.memory-caption h3{font-size:16px;font-weight:700;color:#ff69b4;margin-bottom:6px}
+.memory-caption p{font-size:14px;color:rgba(255,255,255,0.7)}
+.memory-number{position:absolute;top:12px;right:12px;width:32px;height:32px;background:rgba(255,105,180,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.3)}
+.img-wrapper{position:relative;overflow:hidden}
+.footer{text-align:center;padding:40px 20px;color:rgba(255,255,255,0.4);font-size:14px}
+@media(max-width:768px){.page-header h1{font-size:30px}.memories-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px;padding:15px}.memory-card img{height:200px}.memory-caption{padding:12px 15px}.memory-caption h3{font-size:14px}}
+</style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">❤️ عالمنا</div>
-        <div class="nav-links">
-            <a href="home.html">الرئيسية</a>
-            <a href="memories.html" class="active">الذكريات</a>
-            <a href="photos.html">الصور</a>
-            <a href="videos.html">الفيديوهات</a>
-            <a href="music.html">الأغاني</a>
-            <a href="game.html">اللعبة</a>
-        </div>
-    </nav>
-
-    <div class="page-header">
-        <h1>📖 ذكرياتنا</h1>
-        <p>كل لحظة معاكي كانت حكاية جميلة</p>
-    </div>
-
-    <div class="memories-grid">
-        <div class="memory-card" onclick="openLightbox('images/photo1.jpg')">
-            <span class="memory-number">1</span>
-            <img src="images/photo1.jpg" alt="ذكرى 1">
-            <div class="memory-overlay">
-                <div class="memory-caption">❤️ قلبنا مع بعض</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo2.jpg')">
-            <span class="memory-number">2</span>
-            <img src="images/photo2.jpg" alt="ذكرى 2">
-            <div class="memory-overlay">
-                <div class="memory-caption">❤️ قلوبنا على ايدينا</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo3.jpg')">
-            <span class="memory-number">3</span>
-            <img src="images/photo3.jpg" alt="ذكرى 3">
-            <div class="memory-overlay">
-                <div class="memory-caption">❤️ معاكي كل حاجة حلوة</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo4.jpg')">
-            <span class="memory-number">4</span>
-            <img src="images/photo4.jpg" alt="ذكرى 4">
-            <div class="memory-overlay">
-                <div class="memory-caption">❤️ قلبنا كبير</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo5.jpg')">
-            <span class="memory-number">5</span>
-            <img src="images/photo5.jpg" alt="ذكرى 5">
-            <div class="memory-overlay">
-                <div class="memory-caption">❤️ إيدينا مع بعض</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo6.jpg')">
-            <span class="memory-number">6</span>
-            <img src="images/photo6.jpg" alt="ذكرى 6">
-            <div class="memory-overlay">
-                <div class="memory-caption">❤️ متشابكين لأبد الدهر</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo7.jpg')">
-            <span class="memory-number">7</span>
-            <img src="images/photo7.jpg" alt="ذكرى 7">
-            <div class="memory-overlay">
-                <div class="memory-caption">💌 كلام من القلب</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo8.jpg')">
-            <span class="memory-number">8</span>
-            <img src="images/photo8.jpg" alt="ذكرى 8">
-            <div class="memory-overlay">
-                <div class="memory-caption">💬 لحظاتنا الحلوة</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo9.jpg')">
-            <span class="memory-number">9</span>
-            <img src="images/photo9.jpg" alt="ذكرى 9">
-            <div class="memory-overlay">
-                <div class="memory-caption">💬 مسافاتنا ما بتفرقش</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo10.jpg')">
-            <span class="memory-number">10</span>
-            <img src="images/photo10.jpg" alt="ذكرى 10">
-            <div class="memory-overlay">
-                <div class="memory-caption">💬 كل كلمة منك كنز</div>
-            </div>
-        </div>
-
-        <div class="memory-card" onclick="openLightbox('images/photo11.jpg')">
-            <span class="memory-number">11</span>
-            <img src="images/photo11.jpg" alt="ذكرى 11">
-            <div class="memory-overlay">
-                <div class="memory-caption">💌 حبيبي ونور عيوني</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <button class="lightbox-close">✕</button>
-        <img id="lightboxImg" src="" alt="">
-    </div>
-
-    <footer class="footer">
-        <p>❤️ كل ذكرى معاكي كنز ما يتقدرش بفلوس</p>
-    </footer>
-
-    <script>
-        function openLightbox(src) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightbox').classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('show');
-            document.body.style.overflow = '';
-        }
-        document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
-    </script>
+<nav class="navbar"><div class="logo">❤️ عالمنا</div><div class="nav-links"><a href="home.html">الرئيسية</a><a href="memories.html" class="active">الذكريات</a><a href="photos.html">الصور</a><a href="videos.html">الفيديوهات</a><a href="music.html">الأغاني</a><a href="game.html">اللعبة</a></div></nav>
+<div class="page-header"><h1>📖 ذكرياتنا</h1><p>كل لحظة معاكي كانت حكاية جميلة</p></div>
+<div class="memories-grid">
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">1</span><img src="images/photo1.jpg" alt="ذكرى 1"></div><div class="memory-caption"><h3>❤️ قلبنا مع بعض</h3><p>أجمل قلب في الدنيا</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">2</span><img src="images/photo2.jpg" alt="ذكرى 2"></div><div class="memory-caption"><h3>❤️ قلوبنا على ايدينا</h3><p>قلبين في قلب واحد</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">3</span><img src="images/photo3.jpg" alt="ذكرى 3"></div><div class="memory-caption"><h3>❤️ معاكي كل حاجة حلوة</h3><p>كل يوم معاكي يوم سعيد</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">4</span><img src="images/photo4.jpg" alt="ذكرى 4"></div><div class="memory-caption"><h3>❤️ قلبنا كبير</h3><p>حبنا أكبر من أي حاجة</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">5</span><img src="images/photo5.jpg" alt="ذكرى 5"></div><div class="memory-caption"><h3>❤️ إيدينا مع بعض</h3><p>إيدك في إيدي = الدنيا كلها</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">6</span><img src="images/photo6.jpg" alt="ذكرى 6"></div><div class="memory-caption"><h3>❤️ متشابكين لأبد الدهر</h3><p>مش هنفترق أبداً</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">7</span><img src="images/photo7.jpg" alt="ذكرى 7"></div><div class="memory-caption"><h3>💌 كلام من القلب</h3><p>كل كلمة فيها حب</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">8</span><img src="images/photo8.jpg" alt="ذكرى 8"></div><div class="memory-caption"><h3>💬 لحظاتنا الحلوة</h3><p>ضحكنا مع بعض</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">9</span><img src="images/photo9.jpg" alt="ذكرى 9"></div><div class="memory-caption"><h3>💬 مسافاتنا ما بتفرقش</h3><p>قلوبنا مع بعض دايماً</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">10</span><img src="images/photo10.jpg" alt="ذكرى 10"></div><div class="memory-caption"><h3>💬 كل كلمة منك كنز</h3><p>كلامك أغلى من الذهب</p></div></div>
+<div class="memory-card"><div class="img-wrapper"><span class="memory-number">11</span><img src="images/photo11.jpg" alt="ذكرى 11"></div><div class="memory-caption"><h3>💌 حبيبي ونور عيوني</h3><p>أنتِ نور حياتي</p></div></div>
+</div>
+<footer class="footer"><p>❤️ كل ذكرى معاكي كنز ما يتقدرش بفلوس</p></footer>
 </body>
 </html>

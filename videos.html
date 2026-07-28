@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️ فيديوهاتنا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #4a1a4a 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            z-index: 100;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 22px; font-weight: 800; }
+        .nav-links { display: flex; gap: 8px; }
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+            background: rgba(255,105,180,0.2);
+        }
+        .page-header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+        .page-header h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(255,105,180,0.3);
+        }
+        .page-header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 18px;
+        }
+        .videos-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 30px 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .video-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: all 0.4s;
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .video-card:nth-child(1) { animation-delay: 0.1s; }
+        .video-card:nth-child(2) { animation-delay: 0.2s; }
+        .video-card:nth-child(3) { animation-delay: 0.3s; }
+        .video-card:nth-child(4) { animation-delay: 0.4s; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .video-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,105,180,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .video-wrapper {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #000;
+            overflow: hidden;
+        }
+        .video-wrapper video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .video-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2d1b4e, #4a1a4a);
+            gap: 10px;
+        }
+        .video-placeholder .icon { font-size: 50px; }
+        .video-placeholder p { color: rgba(255,255,255,0.5); font-size: 14px; }
+        .video-info {
+            padding: 20px;
+        }
+        .video-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .video-info p {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+        }
+        .video-info .date {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 3px 12px;
+            background: rgba(255,105,180,0.1);
+            border: 1px solid rgba(255,105,180,0.2);
+            border-radius: 15px;
+            font-size: 12px;
+            color: #ff69b4;
+        }
+        .instructions {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            padding: 20px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            text-align: center;
+        }
+        .instructions h4 {
+            color: #ff69b4;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .instructions p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .instructions code {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.4);
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 30px; }
+            .videos-grid { grid-template-columns: 1fr; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">❤️ عالمنا</div>
+        <div class="nav-links">
+            <a href="home.html">الرئيسية</a>
+            <a href="memories.html">الذكريات</a>
+            <a href="photos.html">الصور</a>
+            <a href="videos.html" class="active">الفيديوهات</a>
+            <a href="music.html">الأغاني</a>
+            <a href="game.html">اللعبة</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>🎬 فيديوهاتنا</h1>
+        <p>لحظات متحركة من حياتنا مع بعض</p>
+    </div>
+
+    <div class="instructions">
+        <h4>📌 طريقة إضافة الفيديوهات</h4>
+        <p>حط فيديوهاتك في مجلد <code>videos/</code> وعدل المسار في ملف <code>videos.html</code><br>مثال: <code>videos/video1.mp4</code></p>
+    </div>
+
+    <div class="videos-grid">
+        <!-- PLACEHOLDER VIDEOS - Replace src with your actual videos -->
+        <div class="video-card">
+            <div class="video-wrapper">
+                <video controls poster="">
+                    <source src="videos/video1.mp4" type="video/mp4">
+                    <div class="video-placeholder">
+                        <span class="icon">🎥</span>
+                        <p>ضيفي الفيديو الأول هنا</p>
+                    </div>
+                </video>
+            </div>
+            <div class="video-info">
+                <h3>أول فيديو مع بعض ❤️</h3>
+                <p>اكتبي وصف الفيديو هنا</p>
+                <span class="date">📅 9 نوفمبر 2025</span>
+            </div>
+        </div>
+
+        <div class="video-card">
+            <div class="video-wrapper">
+                <video controls poster="">
+                    <source src="videos/video2.mp4" type="video/mp4">
+                    <div class="video-placeholder">
+                        <span class="icon">🎥</span>
+                        <p>ضيفي الفيديو الثاني هنا</p>
+                    </div>
+                </video>
+            </div>
+            <div class="video-info">
+                <h3>عنوان الفيديو</h3>
+                <p>اكتبي وصف الفيديو هنا</p>
+                <span class="date">📅 التاريخ هنا</span>
+            </div>
+        </div>
+
+        <div class="video-card">
+            <div class="video-wrapper">
+                <video controls poster="">
+                    <source src="videos/video3.mp4" type="video/mp4">
+                    <div class="video-placeholder">
+                        <span class="icon">🎥</span>
+                        <p>ضيفي الفيديو الثالث هنا</p>
+                    </div>
+                </video>
+            </div>
+            <div class="video-info">
+                <h3>عنوان الفيديو</h3>
+                <p>اكتبي وصف الفيديو هنا</p>
+                <span class="date">📅 التاريخ هنا</span>
+            </div>
+        </div>
+
+        <div class="video-card">
+            <div class="video-wrapper">
+                <video controls poster="">
+                    <source src="videos/video4.mp4" type="video/mp4">
+                    <div class="video-placeholder">
+                        <span class="icon">🎥</span>
+                        <p>ضيفي الفيديو الرابع هنا</p>
+                    </div>
+                </video>
+            </div>
+            <div class="video-info">
+                <h3>عنوان الفيديو</h3>
+                <p>اكتبي وصف الفيديو هنا</p>
+                <span class="date">📅 التاريخ هنا</span>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>❤️ كل فيديو معاكي ذكرى حية</p>
+    </footer>
+</body>
+</html>

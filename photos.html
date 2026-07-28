@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️ صورنا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #4a1a4a 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            z-index: 100;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 22px; font-weight: 800; }
+        .nav-links { display: flex; gap: 8px; }
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+            background: rgba(255,105,180,0.2);
+        }
+        .page-header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+        .page-header h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(255,105,180,0.3);
+        }
+        .page-header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 18px;
+        }
+        .gallery {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 30px 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .photo-card {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .photo-card:nth-child(1) { animation-delay: 0.05s; }
+        .photo-card:nth-child(2) { animation-delay: 0.1s; }
+        .photo-card:nth-child(3) { animation-delay: 0.15s; }
+        .photo-card:nth-child(4) { animation-delay: 0.2s; }
+        .photo-card:nth-child(5) { animation-delay: 0.25s; }
+        .photo-card:nth-child(6) { animation-delay: 0.3s; }
+        .photo-card:nth-child(7) { animation-delay: 0.35s; }
+        .photo-card:nth-child(8) { animation-delay: 0.4s; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .photo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            border-color: rgba(255,105,180,0.4);
+        }
+        .photo-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .photo-card:hover img {
+            transform: scale(1.1);
+        }
+        .photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .photo-card:hover .photo-overlay { opacity: 1; }
+        .photo-caption {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .photo-date {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 4px;
+        }
+        .placeholder-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 2px dashed rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.02);
+        }
+        .placeholder-card .icon { font-size: 40px; }
+        .placeholder-card p {
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+        }
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .lightbox.show { display: flex; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px; left: 20px;
+            font-size: 30px;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            transition: all 0.3s;
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.4);
+            font-size: 14px;
+        }
+        .instructions {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            padding: 20px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            text-align: center;
+        }
+        .instructions h4 {
+            color: #ff69b4;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .instructions p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .instructions code {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 30px; }
+            .gallery { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">❤️ عالمنا</div>
+        <div class="nav-links">
+            <a href="home.html">الرئيسية</a>
+            <a href="memories.html">الذكريات</a>
+            <a href="photos.html" class="active">الصور</a>
+            <a href="videos.html">الفيديوهات</a>
+            <a href="music.html">الأغاني</a>
+            <a href="game.html">اللعبة</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>📸 صورنا</h1>
+        <p>كل صورة فيها قصة حب</p>
+    </div>
+
+    <div class="instructions">
+        <h4>📌 طريقة إضافة الصور</h4>
+        <p>حط صورك في مجلد <code>images/</code> وعدل المسار في ملف <code>photos.html</code><br>مثال: <code>images/photo1.jpg</code></p>
+    </div>
+
+    <div class="gallery" id="gallery">
+        <!-- PLACEHOLDER PHOTOS - Replace src with your actual images -->
+        <div class="photo-card" onclick="openLightbox('images/photo1.jpg', 'أول صورة مع بعض ❤️')">
+            <img src="https://via.placeholder.com/400x300/2d1b4e/ff69b4?text=صورة+1" alt="صورة 1">
+            <div class="photo-overlay">
+                <div>
+                    <div class="photo-caption">أول صورة مع بعض ❤️</div>
+                    <div class="photo-date">9 نوفمبر 2025</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openLightbox('images/photo2.jpg', 'يوم جميل معاكي')">
+            <img src="https://via.placeholder.com/400x300/4a1a4a/ff69b4?text=صورة+2" alt="صورة 2">
+            <div class="photo-overlay">
+                <div>
+                    <div class="photo-caption">يوم جميل معاكي</div>
+                    <div class="photo-date">تاريخك هنا</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openLightbox('images/photo3.jpg', 'ضحكتك اللي بحبها')">
+            <img src="https://via.placeholder.com/400x300/1a0a2e/ff69b4?text=صورة+3" alt="صورة 3">
+            <div class="photo-overlay">
+                <div>
+                    <div class="photo-caption">ضحكتك اللي بحبها</div>
+                    <div class="photo-date">تاريخك هنا</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openLightbox('images/photo4.jpg', 'لحظة ما تتنساش')">
+            <img src="https://via.placeholder.com/400x300/2d1b4e/ff69b4?text=صورة+4" alt="صورة 4">
+            <div class="photo-overlay">
+                <div>
+                    <div class="photo-caption">لحظة ما تتنساش</div>
+                    <div class="photo-date">تاريخك هنا</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openLightbox('images/photo5.jpg', 'أجمل يوم في حياتي')">
+            <img src="https://via.placeholder.com/400x300/4a1a4a/ff69b4?text=صورة+5" alt="صورة 5">
+            <div class="photo-overlay">
+                <div>
+                    <div class="photo-caption">أجمل يوم في حياتي</div>
+                    <div class="photo-date">تاريخك هنا</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-card" onclick="openLightbox('images/photo6.jpg', 'معاكي كل حاجة حلوة')">
+            <img src="https://via.placeholder.com/400x300/1a0a2e/ff69b4?text=صورة+6" alt="صورة 6">
+            <div class="photo-overlay">
+                <div>
+                    <div class="photo-caption">معاكي كل حاجة حلوة</div>
+                    <div class="photo-date">تاريخك هنا</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="placeholder-card">
+            <span class="icon">📷</span>
+            <p>ضيفي صورة جديدة</p>
+        </div>
+
+        <div class="placeholder-card">
+            <span class="icon">📷</span>
+            <p>ضيفي صورة جديدة</p>
+        </div>
+    </div>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close">✕</button>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <footer class="footer">
+        <p>❤️ كل صورة معاكي لوحة فنية</p>
+    </footer>
+
+    <script>
+        function openLightbox(src, caption) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+    </script>
+</body>
+</html>

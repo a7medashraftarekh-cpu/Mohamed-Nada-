@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️ ذكرياتنا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #4a1a4a 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            z-index: 100;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 22px; font-weight: 800; }
+        .nav-links { display: flex; gap: 8px; }
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+            background: rgba(255,105,180,0.2);
+        }
+        .page-header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+        .page-header h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(255,105,180,0.3);
+        }
+        .page-header p {
+            color: rgba(255,255,255,0.6);
+            font-size: 18px;
+        }
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 30px 60px;
+            position: relative;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 40px;
+            top: 0; bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #ff69b4, #ff1493, #ff69b4);
+            border-radius: 3px;
+        }
+        .memory-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-right: 80px;
+            animation: fadeInRight 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .memory-item:nth-child(1) { animation-delay: 0.1s; }
+        .memory-item:nth-child(2) { animation-delay: 0.2s; }
+        .memory-item:nth-child(3) { animation-delay: 0.3s; }
+        .memory-item:nth-child(4) { animation-delay: 0.4s; }
+        .memory-item:nth-child(5) { animation-delay: 0.5s; }
+        .memory-item:nth-child(6) { animation-delay: 0.6s; }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .memory-dot {
+            position: absolute;
+            right: 30px;
+            top: 5px;
+            width: 22px; height: 22px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            border-radius: 50%;
+            border: 4px solid #2d1b4e;
+            box-shadow: 0 0 15px rgba(255,105,180,0.5);
+        }
+        .memory-card {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+        .memory-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-5px);
+            border-color: rgba(255,105,180,0.3);
+        }
+        .memory-date {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(255,105,180,0.15);
+            border: 1px solid rgba(255,105,180,0.3);
+            border-radius: 20px;
+            font-size: 13px;
+            color: #ff69b4;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+        .memory-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .memory-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        .memory-card .emoji {
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .add-memory-btn {
+            display: block;
+            max-width: 300px;
+            margin: 30px auto 60px;
+            padding: 16px 30px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .add-memory-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,20,147,0.4);
+        }
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.4);
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .timeline::before { right: 20px; }
+            .memory-item { padding-right: 50px; }
+            .memory-dot { right: 10px; }
+            .page-header h1 { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">❤️ عالمنا</div>
+        <div class="nav-links">
+            <a href="home.html">الرئيسية</a>
+            <a href="memories.html" class="active">الذكريات</a>
+            <a href="photos.html">الصور</a>
+            <a href="videos.html">الفيديوهات</a>
+            <a href="music.html">الأغاني</a>
+            <a href="game.html">اللعبة</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>📖 ذكرياتنا</h1>
+        <p>كل لحظة معاكي كانت حكاية جميلة</p>
+    </div>
+
+    <div class="timeline">
+        <!-- PLACEHOLDER MEMORIES - Replace with your own! -->
+        <div class="memory-item">
+            <div class="memory-dot"></div>
+            <div class="memory-card">
+                <span class="emoji">💕</span>
+                <span class="memory-date">9 نوفمبر 2025</span>
+                <h3>يومنا الأول مع بعض</h3>
+                <p>اللحظة اللي اتقابلنا فيها لأول مرة، كنتِ نور في عينيّ ولسه بفتكر كل تفصيلة فيها. من يومها عرفت إن حياتي هتتغير للأحسن.</p>
+            </div>
+        </div>
+
+        <div class="memory-item">
+            <div class="memory-dot"></div>
+            <div class="memory-card">
+                <span class="emoji">🌹</span>
+                <span class="memory-date">تاريخك هنا</span>
+                <h3>عنوان الذكرى</h3>
+                <p>اكتبي هنا تفاصيل الذكرى الجميلة دي. كل كلمة فيها معناها وحكاية.</p>
+            </div>
+        </div>
+
+        <div class="memory-item">
+            <div class="memory-dot"></div>
+            <div class="memory-card">
+                <span class="emoji">✨</span>
+                <span class="memory-date">تاريخك هنا</span>
+                <h3>عنوان الذكرى</h3>
+                <p>اكتبي هنا تفاصيل الذكرى الجميلة دي. كل كلمة فيها معناها وحكاية.</p>
+            </div>
+        </div>
+
+        <div class="memory-item">
+            <div class="memory-dot"></div>
+            <div class="memory-card">
+                <span class="emoji">🎉</span>
+                <span class="memory-date">تاريخك هنا</span>
+                <h3>عنوان الذكرى</h3>
+                <p>اكتبي هنا تفاصيل الذكرى الجميلة دي. كل كلمة فيها معناها وحكاية.</p>
+            </div>
+        </div>
+
+        <div class="memory-item">
+            <div class="memory-dot"></div>
+            <div class="memory-card">
+                <span class="emoji">🌙</span>
+                <span class="memory-date">تاريخك هنا</span>
+                <h3>عنوان الذكرى</h3>
+                <p>اكتبي هنا تفاصيل الذكرى الجميلة دي. كل كلمة فيها معناها وحكاية.</p>
+            </div>
+        </div>
+
+        <div class="memory-item">
+            <div class="memory-dot"></div>
+            <div class="memory-card">
+                <span class="emoji">💫</span>
+                <span class="memory-date">تاريخك هنا</span>
+                <h3>عنوان الذكرى</h3>
+                <p>اكتبي هنا تفاصيل الذكرى الجميلة دي. كل كلمة فيها معناها وحكاية.</p>
+            </div>
+        </div>
+    </div>
+
+    <button class="add-memory-btn" onclick="alert('افتح الملف memories.html وعدل الكود عشان تضيف ذكرى جديدة! ❤️')">➕ ضيفي ذكرى جديدة</button>
+
+    <footer class="footer">
+        <p>❤️ كل ذكرى معاكي كنز ما يتقدرش بفلوس</p>
+    </footer>
+</body>
+</html>

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>❤️ Our World - الرئيسية</title>
+<link rel="icon" href="images/photo1.jpg" type="image/jpeg">
+<meta property="og:image" content="images/photo1.jpg">
+
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -271,6 +274,10 @@
                 <div class="number" id="minsCount">0</div>
                 <div class="label">دقيقة</div>
             </div>
+            <div class="stat-card">
+                <div class="number" id="secsCount">0</div>
+                <div class="label">ثانية</div>
+            </div>
         </div>
     </section>
 
@@ -346,12 +353,22 @@
         const days = Math.max(0, Math.floor(diffMs / (1000*60*60*24)));
         const hours = Math.max(0, Math.floor(diffMs / (1000*60*60)));
         const mins = Math.max(0, Math.floor(diffMs / (1000*60)));
+        const secs = Math.max(0, Math.floor(diffMs / 1000));
 
         setTimeout(() => {
             animateCounter('daysCount', days, 1500);
             animateCounter('hoursCount', hours, 2000);
             animateCounter('minsCount', mins, 2500);
+            animateCounter('secsCount', secs, 3000);
         }, 500);
+
+        // Live seconds update
+        setInterval(() => {
+            const now2 = new Date();
+            const diff2 = now2 - startDate;
+            const s = Math.max(0, Math.floor(diff2 / 1000));
+            document.getElementById('secsCount').textContent = s.toLocaleString('ar-EG');
+        }, 1000);
     </script>
 </body>
 </html>

@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>❤️ فيديوهاتنا</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="images/photo1.jpg" type="image/jpeg">
+<meta property="og:image" content="images/photo1.jpg">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Tajawal',sans-serif;background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#4a1a4a 100%);min-height:100vh;color:#fff;overflow-x:hidden}
@@ -16,33 +18,60 @@ body{font-family:'Tajawal',sans-serif;background:linear-gradient(135deg,#1a0a2e 
 .page-header{text-align:center;padding:120px 20px 40px}
 .page-header h1{font-size:42px;font-weight:900;margin-bottom:10px;text-shadow:0 4px 20px rgba(255,105,180,0.3)}
 .page-header p{color:rgba(255,255,255,0.6);font-size:18px}
-.videos-grid{max-width:1000px;margin:0 auto;padding:20px 30px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:25px}
-.video-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:18px;overflow:hidden;transition:all 0.4s;animation:fadeInUp 0.6s ease-out forwards;opacity:0}
-.video-card:nth-child(1){animation-delay:0.1s}
-.video-card:nth-child(2){animation-delay:0.2s}
-.video-card:nth-child(3){animation-delay:0.3s}
-.video-card:nth-child(4){animation-delay:0.4s}
+.videos-grid{max-width:1200px;margin:0 auto;padding:20px 30px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.video-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:18px;overflow:hidden;cursor:pointer;transition:all 0.4s;animation:fadeInUp 0.6s ease-out forwards;opacity:0}
+.video-card:nth-child(1){animation-delay:0.05s}
+.video-card:nth-child(2){animation-delay:0.1s}
+.video-card:nth-child(3){animation-delay:0.15s}
+.video-card:nth-child(4){animation-delay:0.2s}
+.video-card:nth-child(5){animation-delay:0.25s}
+.video-card:nth-child(6){animation-delay:0.3s}
+.video-card:nth-child(7){animation-delay:0.35s}
+.video-card:nth-child(8){animation-delay:0.4s}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-.video-card:hover{transform:translateY(-8px);border-color:rgba(255,105,180,0.3);box-shadow:0 20px 50px rgba(0,0,0,0.3)}
-.video-wrapper{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#2d1b4e,#4a1a4a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
-.video-wrapper .icon{font-size:50px}
-.video-wrapper p{color:rgba(255,255,255,0.5);font-size:14px}
-.video-info{padding:20px}
-.video-info h3{font-size:18px;font-weight:700;margin-bottom:6px}
-.video-info p{color:rgba(255,255,255,0.5);font-size:13px}
+.video-card:hover{transform:translateY(-8px);border-color:rgba(255,105,180,0.4);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.video-thumb{position:relative;width:100%;height:200px;overflow:hidden}
+.video-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s}
+.video-card:hover .video-thumb img{transform:scale(1.1)}
+.play-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);transition:background 0.3s}
+.video-card:hover .play-icon{background:rgba(0,0,0,0.15)}
+.play-icon span{width:60px;height:60px;background:rgba(255,105,180,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;box-shadow:0 5px 20px rgba(255,20,147,0.4);transition:transform 0.3s}
+.video-card:hover .play-icon span{transform:scale(1.15)}
+.video-caption{padding:15px 18px;text-align:center;background:rgba(0,0,0,0.2)}
+.video-caption h3{font-size:15px;font-weight:700;color:#ff69b4;margin-bottom:4px}
+.video-caption p{font-size:13px;color:rgba(255,255,255,0.6)}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;flex-direction:column}
+.lightbox.show{display:flex;animation:fadeIn 0.3s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.lightbox video{max-width:90vw;max-height:80vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.lightbox-close{position:absolute;top:20px;left:20px;font-size:30px;color:#fff;cursor:pointer;background:rgba(255,255,255,0.1);width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;transition:all 0.3s}
+.lightbox-close:hover{background:rgba(255,255,255,0.2)}
+.lightbox-title{color:#fff;font-size:18px;margin-top:15px;font-weight:500}
 .footer{text-align:center;padding:40px 20px;color:rgba(255,255,255,0.4);font-size:14px}
-@media(max-width:768px){.page-header h1{font-size:30px}.videos-grid{grid-template-columns:1fr;padding:15px}}
+@media(max-width:768px){.page-header h1{font-size:30px}.videos-grid{grid-template-columns:1fr;padding:15px}.video-thumb{height:180px}}
 </style>
 </head>
 <body>
 <nav class="navbar"><div class="logo">❤️ عالمنا</div><div class="nav-links"><a href="home.html">الرئيسية</a><a href="memories.html">الذكريات</a><a href="photos.html">الصور</a><a href="videos.html" class="active">الفيديوهات</a><a href="music.html">الأغاني</a><a href="game.html">اللعبة</a></div></nav>
 <div class="page-header"><h1>🎬 فيديوهاتنا</h1><p>لحظات متحركة من حياتنا مع بعض</p></div>
 <div class="videos-grid">
-<div class="video-card"><div class="video-wrapper"><span class="icon">🎥</span><p>الفيديو الأول</p></div><div class="video-info"><h3>فيديو 1</h3><p>لحظة جميلة معاكي</p></div></div>
-<div class="video-card"><div class="video-wrapper"><span class="icon">🎥</span><p>الفيديو الثاني</p></div><div class="video-info"><h3>فيديو 2</h3><p>ذكرى ما تتنساش</p></div></div>
-<div class="video-card"><div class="video-wrapper"><span class="icon">🎥</span><p>الفيديو الثالث</p></div><div class="video-info"><h3>فيديو 3</h3><p>يوم من أيامنا الحلوة</p></div></div>
-<div class="video-card"><div class="video-wrapper"><span class="icon">🎥</span><p>الفيديو الرابع</p></div><div class="video-info"><h3>فيديو 4</h3><p>أجمل لحظة في حياتي</p></div></div>
+<div class="video-card" onclick="openVideo('videos/video1.mp4','فيديو 1')"><div class="video-thumb"><img src="images/photo1.jpg" alt="فيديو 1"><div class="play-icon"><span>▶</span></div></div><div class="video-caption"><h3>🎬 فيديو 1</h3><p>لحظة جميلة معاكي</p></div></div>
+<div class="video-card" onclick="openVideo('videos/video2.mp4','فيديو 2')"><div class="video-thumb"><img src="images/photo2.jpg" alt="فيديو 2"><div class="play-icon"><span>▶</span></div></div><div class="video-caption"><h3>🎬 فيديو 2</h3><p>ذكرى ما تتنساش</p></div></div>
+<div class="video-card" onclick="openVideo('videos/video3.mp4','فيديو 3')"><div class="video-thumb"><img src="images/photo3.jpg" alt="فيديو 3"><div class="play-icon"><span>▶</span></div></div><div class="video-caption"><h3>🎬 فيديو 3</h3><p>يوم من أيامنا الحلوة</p></div></div>
+<div class="video-card" onclick="openVideo('videos/video4.mp4','فيديو 4')"><div class="video-thumb"><img src="images/photo4.jpg" alt="فيديو 4"><div class="play-icon"><span>▶</span></div></div><div class="video-caption"><h3>🎬 فيديو 4</h3><p>أجمل لحظة في حياتي</p></div></div>
+<div class="video-card" onclick="openVideo('videos/video5.mp4','فيديو 5')"><div class="video-thumb"><img src="images/photo5.jpg" alt="فيديو 5"><div class="play-icon"><span>▶</span></div></div><div class="video-caption"><h3>🎬 فيديو 5</h3><p>معاكي كل حاجة حلوة</p></div></div>
+<div class="video-card" onclick="openVideo('videos/video6.mp4','فيديو 6')"><div class="video-thumb"><img src="images/photo6.jpg" alt="فيديو 6"><div class="play-icon"><span>▶</span></div></div><div class="video-caption"><h3>🎬 فيديو 6</h3><p>ضحكنا مع بعض</p></div></div>
+<div class="video-card" onclick="openVideo('videos/video7.mp4','فيديو 7')"><div class="video-thumb"><img src="images/photo7.jpg" alt="فيديو 7"><div class="play-icon"><span>▶</span></div></div><div class="video-caption"><h3>🎬 فيديو 7</h3><p>لحظة سعيدة</p></div></div>
+<div class="video-card" onclick="openVideo('videos/video8.mp4','فيديو 8')"><div class="video-thumb"><img src="images/photo8.jpg" alt="فيديو 8"><div class="play-icon"><span>▶</span></div></div><div class="video-caption"><h3>🎬 فيديو 8</h3><p>حبنا أكبر من أي حاجة</p></div></div>
 </div>
+<div class="lightbox" id="lightbox"><button class="lightbox-close" onclick="closeVideo()">✕</button><video id="lightboxVideo" controls autoplay></video><div class="lightbox-title" id="lightboxTitle"></div></div>
 <footer class="footer"><p>❤️ كل فيديو معاكي ذكرى حية</p></footer>
+<script>
+let currentVideo=null;
+function openVideo(src,title){const lb=document.getElementById('lightbox');const vid=document.getElementById('lightboxVideo');const ttl=document.getElementById('lightboxTitle');vid.src=src;vid.load();vid.play();ttl.textContent=title;lb.classList.add('show');document.body.style.overflow='hidden';currentVideo=vid}
+function closeVideo(){const lb=document.getElementById('lightbox');const vid=document.getElementById('lightboxVideo');vid.pause();vid.src='';lb.classList.remove('show');document.body.style.overflow='';currentVideo=null}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeVideo()})
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target.id==='lightbox')closeVideo()})
+</script>
 </body>
 </html>
